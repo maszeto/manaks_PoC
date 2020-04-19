@@ -22,8 +22,81 @@
         <video id="remote-view-video" autoplay playsinline></video>
       </div>
     </div>
-
     <button id="hangup" title="hangup" type="button">cancel/hangup</button>
+    
+    <div>
+      <button id='btnGiveCommand'>Give Command!</button>
+      <br><br>
+      <span id='message'></span>
+      <br><br>
+      
+      <input id='muted' type="checkbox"> Muted ("mute", "unmute")
+      <br>
+      <input id='video' type="checkbox"> Video ("Enable Video", "Disable Video")
+      <br>
+      <input id='calling' type="checkbox"> In Call ("Start Call", "End Call")
+      <br>
+      
+    </div>
+
+
+    <!--Only the latest browsers can use the speech api, api used is OS dependent-->
+    <script>
+      var message = document.querySelector('#message');
+
+      var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+      var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+      var grammar = '#JSGF V1.0;'
+
+      var recognition = new SpeechRecognition();
+      var speechRecognitionList = new SpeechGrammarList();
+      speechRecognitionList.addFromString(grammar, 1);
+      recognition.grammars = speechRecognitionList;
+      recognition.lang = 'en-US';
+      recognition.interimResults = true;
+
+      recognition.onresult = function(event) {
+          var last = event.results.length - 1;
+          var command = event.results[last][0].transcript;
+          message.textContent = 'Voice Input: ' + command + '.';
+
+          if(command.toLowerCase() === 'mute'){
+              document.querySelector('#muted').checked = true;
+          }
+          else if (command.toLowerCase() === 'unmute'){
+              document.querySelector('#muted').checked = false;
+          }
+          else if (command.toLowerCase() === 'enable video'){
+              document.querySelector('#video').checked = true;
+          }
+          else if (command.toLowerCase() === 'disable video'){
+              document.querySelector('#video').checked = false;
+          }
+          else if(command.toLowerCase() === 'start call'){
+              document.querySelector('#calling').checked = true;
+          }
+          else if (command.toLowerCase() === 'end call'){
+              document.querySelector('#calling').checked = false;
+          }
+      };
+
+      recognition.onspeechend = function() {
+          recognition.stop();
+      };
+
+      recognition.onerror = function(event) {
+          message.textContent = 'Error occurred in recognition: ' + event.error;
+      }        
+
+      document.querySelector('#btnGiveCommand').addEventListener('click', function(){
+          recognition.start();
+      });
+
+
+
+
+  </script>
 
     <script src="./index.js"></script>
   </body>
