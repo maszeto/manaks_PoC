@@ -1,14 +1,14 @@
 {
-  "name": "webex-meetings-quick-start",
+  "name": "MANAKS PoC",
   "version": "1.0.0",
   "description": "Webex Meetings Quick Start",
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html"
   },
-  "repository": "https://github.com/WebexSamples/webex-meetings-quick-start",
+  "repository": "https://github.com/maszeto/manaks_PoC",
   "keywords": [],
-  "author": "Adam Weeks <adweeks@cisco.com>",
+  "author": "Matthew Szeto <mattaszeto@gmail.com>, Adam Weeks <adweeks@cisco.com>",
   "license": "ISC",
   "dependencies": {
     "webex": "^1.80.0"
