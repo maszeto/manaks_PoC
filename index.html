@@ -29,13 +29,12 @@
       <span id='message'></span>
       <br><br>
       
-      <input id='chkSteve' type="checkbox"> Steve Rogers
+      <input id='muted' type="checkbox"> Muted
       <br>
-      <input id='chkTony' type="checkbox"> Tony Stark
+      <input id='video' type="checkbox"> Video
       <br>
-      <input id='chkBruce' type="checkbox"> Bruce Banner
+      <input id='calling' type="checkbox"> In Call
       <br>
-      <input id='chkNick' type="checkbox"> Nick Fury
       
     </div>
 
@@ -54,25 +53,31 @@
       speechRecognitionList.addFromString(grammar, 1);
       recognition.grammars = speechRecognitionList;
       recognition.lang = 'en-US';
-      recognition.interimResults = false;
+      recognition.interimResults = true;
 
       recognition.onresult = function(event) {
           var last = event.results.length - 1;
           var command = event.results[last][0].transcript;
           message.textContent = 'Voice Input: ' + command + '.';
 
-          if(command.toLowerCase() === 'select steve'){
-              document.querySelector('#chkSteve').checked = true;
+          if(command.toLowerCase() === 'mute'){
+              document.querySelector('#muted').checked = true;
           }
-          else if (command.toLowerCase() === 'select tony'){
-              document.querySelector('#chkTony').checked = true;
+          else if (command.toLowerCase() === 'unmute'){
+              document.querySelector('#muted').checked = false;
           }
-          else if (command.toLowerCase() === 'select bruce'){
-              document.querySelector('#chkBruce').checked = true;
+          else if (command.toLowerCase() === 'enable video'){
+              document.querySelector('#video').checked = true;
           }
-          else if (command.toLowerCase() === 'select nick'){
-              document.querySelector('#chkNick').checked = true;
-          }   
+          else if (command.toLowerCase() === 'disable video'){
+              document.querySelector('#video').checked = false;
+          }
+          else if(command.toLowerCase() === 'start call'){
+              document.querySelector('#calling').checked = true;
+          }
+          else if (command.toLowerCase() === 'end call'){
+              document.querySelector('#calling').checked = false;
+          }
       };
 
       recognition.onspeechend = function() {
@@ -85,8 +90,9 @@
 
       document.querySelector('#btnGiveCommand').addEventListener('click', function(){
           recognition.start();
-
       });
+
+      
 
 
   </script>
